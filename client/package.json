@@ -12,6 +12,10 @@
         "react-scripts": "4.0.1",
         "sass": "^1.32.5"
     },
+    "scripts": {
+        "start-client": "set PORT=3006 && react-scripts start",
+        "build-client": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build && firebase deploy"
+    },
     "browserslist": {
         "production": [
             ">0.2%",
