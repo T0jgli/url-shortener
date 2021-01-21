@@ -4,7 +4,7 @@ export const UrlSchema = new mongoose.Schema({
     longUrl: String,
     shortUrl: String,
     urlCode: String,
-    date: { type: String, default: new Date() }
+    date: { type: Date, default: Date.now }
 });
 
 export default mongoose.model("url", UrlSchema);
