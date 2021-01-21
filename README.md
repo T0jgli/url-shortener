@@ -1,1 +1,1 @@
-### [Live](https://dc.kvlk.hu/)
+### [Live](https://urlc.kvlk.hu/)
