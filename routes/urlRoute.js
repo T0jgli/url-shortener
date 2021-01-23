@@ -16,8 +16,12 @@ router.post("/", (req, res) => {
         MongoUrl.findOne({
             longUrl: urlToShorten
         }, async (err, doc) => {
-            if (doc) return res.json({ shortUrl: doc.shortUrl });
-            if (err) return console.log(err);
+            if (doc) {
+                return res.json({ shortUrl: doc.shortUrl, longUrl: doc.longUrl })
+            }
+            if (err) {
+                return console.log(err)
+            }
 
             const shortUrl = `${BASE_URL}/${urlCode}`;
 
@@ -37,5 +41,17 @@ router.post("/", (req, res) => {
         console.log(error)
     }
 });
+
+router.delete("/:code", async (req, res) => {
+    const url = await MongoUrl.findOne({ urlCode: req.params.code });
+
+    if (!url) {
+        return res.json({ errorMessage: "Nincs ilyen URL" })
+    }
+
+    await MongoUrl.findOneAndDelete({ urlCode: req.params.code })
+
+    return res.status(200).json({ success: true })
+})
 
 export default router
