@@ -1,4 +1,3 @@
-import { IconButton } from "@material-ui/core";
 import { useState } from "react";
 import SearchBox from "./components/SearchBox";
 import Snackbars from "./components/Snackbars";

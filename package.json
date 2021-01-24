@@ -9,6 +9,7 @@
         "express": "^4.17.1",
         "mongoose": "^5.11.12",
         "nodemon": "^2.0.7",
+        "public-ip": "^4.0.3",
         "shortid": "^2.2.16"
     },
     "scripts": {

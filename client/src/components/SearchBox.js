@@ -54,7 +54,7 @@ const SearchBox = ({ responseData, setresponseData, setSnackbarOpen }) => {
                     behavior: "smooth"
                 })
 
-                if (responseData.find(url => url.shortUrl === res.data.shortUrl)) return setSnackbarOpen({
+                if (responseData.find(url => url.longUrl === res.data.longUrl)) return setSnackbarOpen({
                     open: true,
                     content: "Az URL már szerepel a listán!",
                     severity: "warning",

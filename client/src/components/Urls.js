@@ -1,12 +1,16 @@
-import { Button, IconButton } from "@material-ui/core"
+import { Button, CircularProgress, IconButton } from "@material-ui/core"
 import CloseIcon from '@material-ui/icons/Close';
 import axios from "axios";
+import { useState } from "react";
 
 const Urls = ({ longUrl, shortUrl, setSnackbarOpen, setResponseData, responseData }) => {
+    const [loading, setLoading] = useState(false)
     const removeUrl = () => {
-        axios.delete("http://localhost:5000" + `/api/${shortUrl.split("/").slice(-1)[0]}`).then(res => {
+        setLoading(true)
+        axios.delete(process.env.REACT_APP_URL + `/api/${shortUrl.split("/").slice(-1)[0]}`).then(res => {
             const newDataArray = responseData.filter(url => url.shortUrl !== shortUrl)
             setResponseData(newDataArray)
+            setLoading(false)
             localStorage.setItem("URLS", JSON.stringify(newDataArray))
             if (res.data.errorMessage) return setSnackbarOpen({
                 open: true,
@@ -26,8 +30,13 @@ const Urls = ({ longUrl, shortUrl, setSnackbarOpen, setResponseData, responseDat
 
     return (
         <div className="my-urls">
-            <IconButton onClick={removeUrl} size="small" className="delete-icon">
-                <CloseIcon />
+            <IconButton disabled={loading} onClick={removeUrl} size="small" className="delete-icon">
+                {loading ? (
+                    <CircularProgress size={20} style={{ color: "white" }} />
+                ) : (
+                        <CloseIcon />
+                    )}
+
             </IconButton>
             <ul>
                 <li>

@@ -7,34 +7,46 @@ dotenv.config();
 const router = express.Router();
 const BASE_URL = process.env.BASEURL;
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
     const { urlToShorten } = req.body;
 
     const urlCode = shortid.generate();
 
     try {
-        MongoUrl.findOne({
-            longUrl: urlToShorten
-        }, async (err, doc) => {
-            if (doc) {
-                return res.json({ shortUrl: doc.shortUrl, longUrl: doc.longUrl })
-            }
-            if (err) {
-                return console.log(err)
-            }
+        const shortUrl = `${BASE_URL}/${urlCode}`;
 
-            const shortUrl = `${BASE_URL}/${urlCode}`;
+        const url = new MongoUrl({
+            longUrl: urlToShorten,
+            shortUrl,
+            urlCode: urlCode
+        });
 
-            const url = new MongoUrl({
-                longUrl: urlToShorten,
-                shortUrl,
-                urlCode: urlCode
-            });
+        await url.save();
 
-            await url.save();
+        res.json(url);
 
-            res.json(url);
-        })
+        /*         MongoUrl.findOne({
+                    longUrl: urlToShorten
+                }, async (err, doc) => {
+                    if (doc) {
+                        return res.json({ shortUrl: doc.shortUrl, longUrl: doc.longUrl })
+                    }
+                    if (err) {
+                        return console.log(err)
+                    }
+        
+                    const shortUrl = `${BASE_URL}/${urlCode}`;
+        
+                    const url = new MongoUrl({
+                        longUrl: urlToShorten,
+                        shortUrl,
+                        urlCode: urlCode
+                    });
+        
+                    await url.save();
+        
+                    res.json(url);
+                }) */
 
 
     } catch (error) {
