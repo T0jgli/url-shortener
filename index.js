@@ -1,16 +1,17 @@
-import express from "express";
-import cors from "cors";
-import indexRoute from "./routes/indexRoute.js";
-import urlRoute from "./routes/urlRoute.js";
-
-import { dbConnect } from "./db/db.js";
+const express = require("express");
+const cors = require("cors");
+const path = require("path");
+const indexRoute = require("./routes/indexRoute.js");
+const urlRoute = require("./routes/urlRoute.js");
+const dbConnect = require("./db/db.js");
 
 dbConnect();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 app.use(express.json());
-app.use(cors())
+app.use(cors());
+app.use(express.static(path.join(__dirname, "client/build")));
 
 app.use("/", indexRoute);
 app.use("/api", urlRoute);

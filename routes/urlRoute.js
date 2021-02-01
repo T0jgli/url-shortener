@@ -1,8 +1,8 @@
-import express from "express";
-import shortid from "shortid";
-import MongoUrl from "../db/urlModel.js";
-import dotenv from "dotenv";
-dotenv.config();
+const express = require("express");
+const shortid = require("shortid");
+
+const MongoUrl = require("../db/urlModel.js");
+require("dotenv").config();
 
 const router = express.Router();
 const BASE_URL = process.env.BASEURL;
@@ -66,4 +66,4 @@ router.delete("/:code", async (req, res) => {
     return res.status(200).json({ success: true })
 })
 
-export default router
+module.exports = router;

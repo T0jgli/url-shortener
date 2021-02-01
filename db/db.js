@@ -1,10 +1,9 @@
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-dotenv.config();
+const mongoose = require("mongoose");
+require("dotenv").config();
 
 const CONNECTURL = process.env.MONGOURL;
 
-export const dbConnect = async () => {
+const dbConnect = async () => {
     try {
         await mongoose.connect(CONNECTURL, {
             useNewUrlParser: true,
@@ -16,3 +15,5 @@ export const dbConnect = async () => {
         process.exit(1);
     }
 };
+
+module.exports = dbConnect;
