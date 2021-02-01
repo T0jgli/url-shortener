@@ -114,6 +114,11 @@ body {
   margin: 2rem auto;
   width: 75%;
   background-color: rgba(90, 90, 90, 0.8);
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.001);
+  }
 
   @media (max-width: 768px) {
     width: 90%;

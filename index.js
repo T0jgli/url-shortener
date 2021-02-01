@@ -17,5 +17,5 @@ app.use("/api", urlRoute);
 
 
 app.listen(PORT, () => {
-    console.log(`App running on ${PORT}`)
+    console.log(`App running on http://localhost:${PORT}`)
 });

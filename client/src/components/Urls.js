@@ -30,11 +30,11 @@ const Urls = ({ longUrl, shortUrl, setSnackbarOpen, setResponseData, responseDat
 
     return (
         <div className="my-urls">
-            <IconButton disabled={loading} onClick={removeUrl} size="small" className="delete-icon">
+            <IconButton aria-label="Törlés ikon" disabled={loading} onClick={removeUrl} size="small" className="delete-icon">
                 {loading ? (
-                    <CircularProgress size={20} style={{ color: "white" }} />
+                    <CircularProgress aria-hidden={true} size={20} style={{ color: "white" }} />
                 ) : (
-                        <CloseIcon />
+                        <CloseIcon aria-hidden={true} />
                     )}
 
             </IconButton>

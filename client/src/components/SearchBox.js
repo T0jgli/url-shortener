@@ -104,7 +104,7 @@ const SearchBox = ({ responseData, setresponseData, setSnackbarOpen }) => {
                 </h2>
                 <div className="searchbox-div">
                     <div className="searchbox">
-                        <input placeholder="URL..." value={inputUrl} onChange={e => {
+                        <input aria-label="Input sáv" placeholder="URL..." value={inputUrl} onChange={e => {
                             setInputUrl(e.target.value);
                         }} />
                         {inputUrl && (
