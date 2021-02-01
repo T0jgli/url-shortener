@@ -41,7 +41,7 @@ const SearchBox = ({ responseData, setresponseData, setSnackbarOpen }) => {
 
         setLoading(true)
 
-        axios.post(process.env.REACT_APP_URL + "/api", {
+        axios.post("/api", {
             urlToShorten: inputUrl
         }).then(res => {
             if (res.status === 200) {

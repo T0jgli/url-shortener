@@ -7,7 +7,7 @@ const Urls = ({ longUrl, shortUrl, setSnackbarOpen, setResponseData, responseDat
     const [loading, setLoading] = useState(false)
     const removeUrl = () => {
         setLoading(true)
-        axios.delete(process.env.REACT_APP_URL + `/api/${shortUrl.split("/").slice(-1)[0]}`).then(res => {
+        axios.delete(`/api/${shortUrl.split("/").slice(-1)[0]}`).then(res => {
             const newDataArray = responseData.filter(url => url.shortUrl !== shortUrl)
             setResponseData(newDataArray)
             setLoading(false)

@@ -14,7 +14,7 @@
     },
     "scripts": {
         "start-client": "set PORT=3006 && react-scripts start",
-        "build-client": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build && firebase deploy"
+        "build-client": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build"
     },
     "eslintConfig": {
         "extends": [
