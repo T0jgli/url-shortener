@@ -9,7 +9,6 @@ dbConnect();
 
 const app = express();
 const PORT = process.env.PORT || 8080;
-const router = express.Router();
 
 app.use(express.json());
 app.use(cors());
@@ -18,7 +17,7 @@ app.use(express.static(path.join(__dirname, "client/build")));
 app.use("/", indexRoute);
 app.use("/api", urlRoute);
 
-router.get("/", (req, res) => {
+app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
 })
 
