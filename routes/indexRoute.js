@@ -1,6 +1,5 @@
 const express = require("express");
 const MongoUrl = require("../db/urlModel.js");
-const path = require("path");
 
 const router = express.Router();
 
@@ -20,11 +19,4 @@ router.get("/:code", async (req, res) => {
     }
 })
 
-
-/* router.get("/", (req, res) => {
-    //res.redirect("https://urlc.kvlk.hu");
-
-    res.sendFile(path.join(__dirname, "../client/build", "index.html"));
-})
-
- */module.exports = router;
+module.exports = router;
