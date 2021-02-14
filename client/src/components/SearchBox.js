@@ -3,7 +3,7 @@ import axios from "axios";
 import CloseIcon from '@material-ui/icons/Close';
 import { CircularProgress } from "@material-ui/core";
 
-/* function validURL (str) {
+function validURL (str) {
     var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
         '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
         '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
@@ -11,15 +11,6 @@ import { CircularProgress } from "@material-ui/core";
         '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
         '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
     return !!pattern.test(str);
-}
- */
-const validURL = (url) => {
-    try {
-        new URL(url);
-        return true;
-    } catch (e) {
-        return false;
-    }
 }
 
 const SearchBox = ({ responseData, setresponseData, setSnackbarOpen }) => {
@@ -47,12 +38,6 @@ const SearchBox = ({ responseData, setresponseData, setSnackbarOpen }) => {
             if (res.status === 200) {
                 setInputUrl("")
                 setLoading(false)
-
-                window.scrollTo({
-                    top: window.innerHeight,
-                    left: 0,
-                    behavior: "smooth"
-                })
 
                 if (responseData.find(url => url.longUrl === res.data.longUrl)) return setSnackbarOpen({
                     open: true,
@@ -85,6 +70,12 @@ const SearchBox = ({ responseData, setresponseData, setSnackbarOpen }) => {
                     content: "Siker!",
                     severity: "success",
                 })
+                window.scrollTo({
+                    top: window.innerHeight,
+                    left: 0,
+                    behavior: "smooth"
+                })
+
             }
         }).catch(err => {
             setSnackbarOpen({
@@ -102,25 +93,28 @@ const SearchBox = ({ responseData, setresponseData, setSnackbarOpen }) => {
                 <h2>
                     URL Shortener by ME
                 </h2>
-                <div className="searchbox-div">
-                    <div className="searchbox">
-                        <input aria-label="Input sáv" placeholder="URL..." value={inputUrl} onChange={e => {
-                            setInputUrl(e.target.value);
-                        }} />
-                        {inputUrl && (
-                            <CloseIcon onClick={() => setInputUrl("")} />
-                        )}
+                <form style={{ width: "100%" }} onSubmit={handleSubmit}>
+                    <div className="searchbox-div">
+                        <div className="searchbox">
+                            <input aria-label="Input sáv" placeholder="URL..." value={inputUrl} onChange={e => {
+                                setInputUrl(e.target.value);
+                            }} />
+                            {inputUrl && (
+                                <CloseIcon onClick={() => setInputUrl("")} />
+                            )}
+                        </div>
+                        <div className="button">
+                            <button type="submit">
+                                {loading ? (
+                                    <CircularProgress size={20} style={{ color: "grey" }} />
+                                ) : (
+                                        "Mehet"
+                                    )}
+                            </button>
+                        </div>
+
                     </div>
-                    <div className="button">
-                        <button onClick={handleSubmit}>
-                            {loading ? (
-                                <CircularProgress size={20} style={{ color: "grey" }} />
-                            ) : (
-                                    "Mehet"
-                                )}
-                        </button>
-                    </div>
-                </div>
+                </form>
             </div>
         </>
     )
