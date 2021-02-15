@@ -2,7 +2,7 @@
 
   
 
-### ✨ [Live(Heroku)](https://url.kvlk.hu)
+### ✨ [Live](http://3.125.186.39/)
 
 > Web app using ExpressJS and MongoDB as backend and React as frontend.  
 
