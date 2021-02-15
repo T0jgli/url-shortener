@@ -2,7 +2,7 @@
 
   
 
-### ✨ [Live](http://3.125.186.39/)
+### ✨ [Live](https://url.kvlk.hu/)
 
 > Web app using ExpressJS and MongoDB as backend and React as frontend.  
 
