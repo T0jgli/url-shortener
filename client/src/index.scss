@@ -319,3 +319,35 @@ body {
     background: rgba(0, 0, 0, 0.6);
   }
 }
+
+.githublink {
+  position: absolute;
+  top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  left: 5px;
+
+  a {
+    color: gray !important;
+    text-decoration: none;
+    transition: 0.3s ease-in-out !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+      transition: 0.3s ease-in-out !important;
+      color: rgb(190, 190, 190) !important;
+      .MuiSvgIcon-root {
+        transition: 0.3s ease-in-out !important;
+        color: rgb(190, 190, 190) !important;
+      }
+    }
+
+    .MuiSvgIcon-root {
+      margin-left: 10px;
+      color: gray !important;
+      cursor: default !important;
+      transition: 0.3s ease-in-out !important;
+    }
+  }
+}

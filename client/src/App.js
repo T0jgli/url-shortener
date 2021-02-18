@@ -2,6 +2,8 @@ import { useState } from "react";
 import SearchBox from "./components/SearchBox";
 import Snackbars from "./components/Snackbars";
 import Urls from "./components/Urls";
+import GitHubIcon from '@material-ui/icons/GitHub';
+
 const App = () => {
   const [responseData, setresponseData] = useState(JSON.parse(localStorage.getItem("URLS")) || []);
   const [snackbarOpen, setSnackbarOpen] = useState({
@@ -10,6 +12,13 @@ const App = () => {
 
   return (
     <>
+      <div className="githublink">
+        <a href="https://github.com/T0jgli/url-shortener" rel="noopener noreferrer" target="_blank">
+          GitHub
+          <GitHubIcon fontSize="small" />
+        </a>
+      </div>
+
       <SearchBox responseData={responseData} setresponseData={setresponseData} setSnackbarOpen={setSnackbarOpen} />
       {responseData.length > 0 && (
         <>

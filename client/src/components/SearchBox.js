@@ -46,7 +46,7 @@ const SearchBox = ({ responseData, setresponseData, setSnackbarOpen }) => {
 
         setLoading(true)
 
-        axios.post("/api", {
+        axios.post("http://localhost:8080/api", {
             urlToShorten: inputUrl,
             customUrl
         }).then(res => {
