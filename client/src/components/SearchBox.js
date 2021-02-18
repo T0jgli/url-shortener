@@ -13,6 +13,8 @@ function validURL (str) {
     return !!pattern.test(str);
 }
 
+const customUrlRegexp = new RegExp(/[^\w]/)
+
 const SearchBox = ({ responseData, setresponseData, setSnackbarOpen }) => {
     const [inputUrl, setInputUrl] = useState("");
     const [customUrl, setCustomUrl] = useState("");
@@ -35,6 +37,13 @@ const SearchBox = ({ responseData, setresponseData, setSnackbarOpen }) => {
                 severity: "error",
             });
 
+        if (customUrlRegexp.test(customUrl))
+            return setSnackbarOpen({
+                open: true,
+                content: "Az azonosító nem tartalmazhat speciális karaktereket!",
+                severity: "error",
+            });
+
         if (responseData.find(url => url.longUrl === inputUrl)) {
             setInputUrl("");
             return setSnackbarOpen({
@@ -46,7 +55,7 @@ const SearchBox = ({ responseData, setresponseData, setSnackbarOpen }) => {
 
         setLoading(true)
 
-        axios.post("http://localhost:8080/api", {
+        axios.post("/api", {
             urlToShorten: inputUrl,
             customUrl
         }).then(res => {
