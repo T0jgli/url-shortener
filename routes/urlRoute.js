@@ -8,46 +8,29 @@ const router = express.Router();
 const BASE_URL = process.env.BASEURL;
 
 router.post("/", async (req, res) => {
-    const { urlToShorten } = req.body;
+    const { urlToShorten, customUrl } = req.body;
 
-    const urlCode = shortid.generate();
+    const urlCode = customUrl ? customUrl : shortid.generate();
 
     try {
         const shortUrl = `${BASE_URL}/${urlCode}`;
 
+        const existingUrlWithThatCode = await MongoUrl.findOne({
+            urlCode
+        });
+
+        if (existingUrlWithThatCode)
+            return res.json({ existingError: true })
+
         const url = new MongoUrl({
             longUrl: urlToShorten,
             shortUrl,
-            urlCode: urlCode
+            urlCode
         });
 
         await url.save();
 
         res.json(url);
-
-        /*         MongoUrl.findOne({
-                    longUrl: urlToShorten
-                }, async (err, doc) => {
-                    if (doc) {
-                        return res.json({ shortUrl: doc.shortUrl, longUrl: doc.longUrl })
-                    }
-                    if (err) {
-                        return console.log(err)
-                    }
-        
-                    const shortUrl = `${BASE_URL}/${urlCode}`;
-        
-                    const url = new MongoUrl({
-                        longUrl: urlToShorten,
-                        shortUrl,
-                        urlCode: urlCode
-                    });
-        
-                    await url.save();
-        
-                    res.json(url);
-                }) */
-
 
     } catch (error) {
         console.log(error)

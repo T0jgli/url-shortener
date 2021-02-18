@@ -39,6 +39,7 @@ body {
 
   .searchbox-div {
     width: 75%;
+    position: relative;
     margin: auto;
     height: 60vh;
     display: grid;
@@ -57,7 +58,6 @@ body {
       justify-content: space-between;
       align-items: center;
       height: 50px;
-      width: 100%;
       padding: 8px;
 
       box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.1), 0px 5px 8px 0px rgba(0, 0, 0, 0.1),
@@ -68,16 +68,51 @@ body {
         border: none;
         width: 100%;
         flex: 1;
-        padding: 0 5px;
+        padding: 0 7px;
         height: 100%;
         font-size: 22px;
         background: transparent;
+      }
+    }
+
+    .custom-url {
+      width: 30%;
+      position: absolute;
+      top: 150px;
+      right: 0;
+      display: flex;
+      border-radius: 30px;
+      background-color: whitesmoke;
+      justify-content: space-between;
+      align-items: center;
+      height: 35px;
+      padding: 6px;
+
+      box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.1), 0px 5px 8px 0px rgba(0, 0, 0, 0.1),
+        0px 1px 14px 0px rgba(0, 0, 0, 0.08);
+      input {
+        outline: 0;
+        border: none;
+        width: 100%;
+        flex: 1;
+        padding: 0 7px;
+        height: 100%;
+        font-size: 17px;
+        background: transparent;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+
+        @media (max-width: 768px) {
+          max-width: 60px;
+        }
       }
     }
   }
 
   .button {
     width: 25%;
+    padding-top: 4rem;
     margin: auto;
     button {
       width: 100%;

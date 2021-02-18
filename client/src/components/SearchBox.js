@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import CloseIcon from '@material-ui/icons/Close';
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress, Grow } from "@material-ui/core";
 
 function validURL (str) {
     var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
@@ -15,35 +15,53 @@ function validURL (str) {
 
 const SearchBox = ({ responseData, setresponseData, setSnackbarOpen }) => {
     const [inputUrl, setInputUrl] = useState("");
+    const [customUrl, setCustomUrl] = useState("");
     const [loading, setLoading] = useState(false)
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!inputUrl) return setSnackbarOpen({
-            open: true,
-            content: "Adj meg egy URL-t!",
-            severity: "error",
-        });
-        if (!validURL(inputUrl)) return setSnackbarOpen({
-            open: true,
-            content: "Ez nem URL!",
-            severity: "error",
-        });
+
+        if (!inputUrl)
+            return setSnackbarOpen({
+                open: true,
+                content: "Adj meg egy URL-t!",
+                severity: "error",
+            });
+
+        if (!validURL(inputUrl))
+            return setSnackbarOpen({
+                open: true,
+                content: "Ez nem URL!",
+                severity: "error",
+            });
+
+        if (responseData.find(url => url.longUrl === inputUrl)) {
+            setInputUrl("");
+            return setSnackbarOpen({
+                open: true,
+                content: "Az URL már szerepel a listán!",
+                severity: "warning",
+            })
+        };
 
         setLoading(true)
 
         axios.post("/api", {
-            urlToShorten: inputUrl
+            urlToShorten: inputUrl,
+            customUrl
         }).then(res => {
             if (res.status === 200) {
-                setInputUrl("")
-                setLoading(false)
+                setInputUrl("");
+                setCustomUrl("");
+                setLoading(false);
 
-                if (responseData.find(url => url.longUrl === res.data.longUrl)) return setSnackbarOpen({
-                    open: true,
-                    content: "Az URL már szerepel a listán!",
-                    severity: "warning",
-                });
+                if (res.data.existingError)
+                    return setSnackbarOpen({
+                        open: true,
+                        content: "Ez az azonosító foglalt. Válassz másikat!",
+                        severity: "error",
+                    })
+
 
                 if (responseData.length > 0) {
                     localStorage.setItem("URLS", JSON.stringify([
@@ -100,9 +118,16 @@ const SearchBox = ({ responseData, setresponseData, setSnackbarOpen }) => {
                                 setInputUrl(e.target.value);
                             }} />
                             {inputUrl && (
-                                <CloseIcon onClick={() => setInputUrl("")} />
+                                <CloseIcon onClick={() => { setInputUrl(""); setCustomUrl("") }} />
                             )}
                         </div>
+                        <Grow in={Boolean(inputUrl)}>
+                            <div className="custom-url">
+                                <input aria-label="Input sáv" placeholder="Egyedi azonosító" value={customUrl} onChange={e => {
+                                    setCustomUrl(e.target.value);
+                                }} />
+                            </div>
+                        </Grow>
                         <div className="button">
                             <button type="submit">
                                 {loading ? (
