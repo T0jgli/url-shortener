@@ -33,6 +33,7 @@ const App = () => {
 
     getViewers()
 
+    // eslint-disable-next-line
   }, [responseData])
 
   return (
@@ -45,7 +46,7 @@ const App = () => {
       </div>
 
       <SearchBox responseData={responseData} setresponseData={setresponseData} setSnackbarOpen={setSnackbarOpen} />
-      {responseData.length > 0 && viewers.length > 0 && (
+      {responseData.length > 0 && (
         <>
           <div className="icon-scroll" onClick={() => {
             window.scrollTo({
