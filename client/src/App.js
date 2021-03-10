@@ -12,7 +12,7 @@ const App = () => {
   const [snackbarOpen, setSnackbarOpen] = useState({
     open: false
   })
-  const [viewers, setViewers] = useState([])
+  const [viewers, setViewers] = useState({})
 
   const getViewers = async () => {
     if (responseData.length > 0) {
@@ -60,7 +60,7 @@ const App = () => {
             {responseData?.map((url, index, array) => (
               <div key={index}>
                 <Urls
-                  view={viewers[index]}
+                  view={viewers}
                   responseData={responseData}
                   setResponseData={setresponseData}
                   setSnackbarOpen={setSnackbarOpen}
