@@ -3,14 +3,18 @@ import axios from "axios";
 import CloseIcon from '@material-ui/icons/Close';
 import { CircularProgress, Grow } from "@material-ui/core";
 
+const BACKEND_URL = process.env.NODE_ENV === "development" ? "http://localhost:8080" : ""
+
 function validURL (str) {
-    var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-        '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
-    return !!pattern.test(str);
+    if (!str.includes("http")) {
+        str = "http://" + str;
+    }
+    try {
+        new URL(str);
+        return true;
+    } catch {
+        return false;
+    }
 }
 
 const customUrlRegexp = new RegExp(/[^\w]/)
@@ -55,7 +59,7 @@ const SearchBox = ({ responseData, setresponseData, setSnackbarOpen }) => {
 
         setLoading(true)
 
-        axios.post("/api", {
+        axios.post(BACKEND_URL + "/api", {
             urlToShorten: inputUrl,
             customUrl
         }).then(res => {
@@ -117,6 +121,8 @@ const SearchBox = ({ responseData, setresponseData, setSnackbarOpen }) => {
     return (
         <>
             <div className="App">
+
+
                 <h2>
                     URL Shortener by ME
                 </h2>
@@ -142,14 +148,16 @@ const SearchBox = ({ responseData, setresponseData, setSnackbarOpen }) => {
                                 {loading ? (
                                     <CircularProgress size={20} style={{ color: "grey" }} />
                                 ) : (
-                                        "Mehet"
-                                    )}
+                                    "Mehet"
+                                )}
                             </button>
                         </div>
 
                     </div>
                 </form>
+
             </div>
+
         </>
     )
 }

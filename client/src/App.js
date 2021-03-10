@@ -3,12 +3,37 @@ import SearchBox from "./components/SearchBox";
 import Snackbars from "./components/Snackbars";
 import Urls from "./components/Urls";
 import GitHubIcon from '@material-ui/icons/GitHub';
+import axios from "axios";
+import { useEffect } from "react";
+const BACKEND_URL = process.env.NODE_ENV === "development" ? "http://localhost:8080" : ""
 
 const App = () => {
   const [responseData, setresponseData] = useState(JSON.parse(localStorage.getItem("URLS")) || []);
   const [snackbarOpen, setSnackbarOpen] = useState({
     open: false
   })
+  const [viewers, setViewers] = useState([])
+
+  const getViewers = async () => {
+    if (responseData.length > 0) {
+      const parsedData = responseData.map(data => data.shortUrl.split("/").slice(-1)[0])
+      const { data: { viewers } } = await axios.get(BACKEND_URL + "/api/getViewers", {
+        params: {
+          urlCodes: parsedData.join("&")
+        }
+      }
+      )
+      setViewers(viewers)
+
+    }
+  }
+
+
+  useEffect(() => {
+
+    getViewers()
+
+  }, [responseData])
 
   return (
     <>
@@ -20,7 +45,7 @@ const App = () => {
       </div>
 
       <SearchBox responseData={responseData} setresponseData={setresponseData} setSnackbarOpen={setSnackbarOpen} />
-      {responseData.length > 0 && (
+      {responseData.length > 0 && viewers.length > 0 && (
         <>
           <div className="icon-scroll" onClick={() => {
             window.scrollTo({
@@ -33,7 +58,9 @@ const App = () => {
           <div className="confirmation">
             {responseData?.map((url, index, array) => (
               <div key={index}>
-                <Urls responseData={responseData}
+                <Urls
+                  view={viewers[index]}
+                  responseData={responseData}
                   setResponseData={setresponseData}
                   setSnackbarOpen={setSnackbarOpen}
                   longUrl={url.longUrl} shortUrl={url.shortUrl} />
@@ -44,8 +71,6 @@ const App = () => {
 
         </>
       )}
-
-
 
       <Snackbars setSnackbarOpen={setSnackbarOpen} snackbarOpen={snackbarOpen} />
 

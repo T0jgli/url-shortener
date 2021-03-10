@@ -183,6 +183,24 @@ body {
       }
     }
 
+    .count-icon {
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.4) !important;
+      color: white;
+      transition: 0.3s ease-in-out;
+      height: 1.5em;
+      width: 1.5em;
+      border-radius: 50%;
+      padding: 3px;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.6) !important;
+      }
+    }
+
     ul {
       list-style: none;
       margin: 2rem auto;

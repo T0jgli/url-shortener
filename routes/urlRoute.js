@@ -49,4 +49,24 @@ router.delete("/:code", async (req, res) => {
     return res.status(200).json({ success: true })
 })
 
+router.get("/getViewers", async (req, res) => {
+    try {
+        const parsedParam = req.query.urlCodes.split("&")
+        const viewers = [];
+        for (param of parsedParam) {
+            const { used } = await MongoUrl.findOne({ urlCode: param })
+            viewers.push({
+                [param]: used
+            })
+
+        }
+        return res.status(200).json({
+            viewers
+        })
+    } catch (error) {
+        console.log(error)
+    }
+
+})
+
 module.exports = router;

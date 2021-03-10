@@ -2,12 +2,15 @@ import { Button, CircularProgress, IconButton } from "@material-ui/core"
 import CloseIcon from '@material-ui/icons/Close';
 import axios from "axios";
 import { useState } from "react";
+const BACKEND_URL = process.env.NODE_ENV === "development" ? "http://localhost:8080" : ""
 
-const Urls = ({ longUrl, shortUrl, setSnackbarOpen, setResponseData, responseData }) => {
+const Urls = ({ longUrl, shortUrl, setSnackbarOpen, setResponseData, responseData, view }) => {
+    const urlCode = shortUrl.split("/").slice(-1)[0]
     const [loading, setLoading] = useState(false)
+
     const removeUrl = () => {
         setLoading(true)
-        axios.delete(`/api/${shortUrl.split("/").slice(-1)[0]}`).then(res => {
+        axios.delete(BACKEND_URL + `/api/${urlCode}`).then(res => {
             const newDataArray = responseData.filter(url => url.shortUrl !== shortUrl)
             setResponseData(newDataArray)
             setLoading(false)
@@ -34,10 +37,15 @@ const Urls = ({ longUrl, shortUrl, setSnackbarOpen, setResponseData, responseDat
                 {loading ? (
                     <CircularProgress aria-hidden={true} size={20} style={{ color: "white" }} />
                 ) : (
-                        <CloseIcon aria-hidden={true} />
-                    )}
-
+                    <CloseIcon aria-hidden={true} />
+                )}
             </IconButton>
+            {view && (
+                <div aria-label="Hányan nézték meg ikon" className="count-icon">
+                    {view[urlCode]}
+                </div>
+            )}
+
             <ul>
                 <li>
                     <span title={longUrl} className="longurl">{longUrl}</span>
