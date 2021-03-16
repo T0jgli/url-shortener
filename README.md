@@ -29,7 +29,7 @@ npm run start-client
 Make sure you created a .env file with the required variables that can be found in the .env.template file.
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
 Or while developing the client view [http://localhost:3006](http://localhost:3006).
 
 The pages will reload if you make edits.\
