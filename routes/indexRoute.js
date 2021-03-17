@@ -1,5 +1,6 @@
 const express = require("express");
 const MongoUrl = require("../db/urlModel.js");
+const logger = require("../helpers/logger.js");
 
 const router = express.Router();
 
@@ -11,11 +12,11 @@ router.get("/:code", async (req, res) => {
             }
         });
 
-        if (url) return res.redirect(url.longUrl.includes("http") ? url.longUrl : `http://${url.longUrl}`);
+        if (url) return res.status(308).redirect(url.longUrl.includes("http") ? url.longUrl : `http://${url.longUrl}`);
 
-        return res.json("No URL found");
+        return res.status(404).json("No URL found");
     } catch (error) {
-        console.log(error);
+        logger("error", error)
         res.status(500).send("Server error")
     }
 })

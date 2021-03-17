@@ -2,7 +2,7 @@ import { Button, CircularProgress, IconButton } from "@material-ui/core"
 import CloseIcon from '@material-ui/icons/Close';
 import axios from "axios";
 import { useState } from "react";
-const BACKEND_URL = process.env.NODE_ENV === "development" ? "http://localhost:8080" : ""
+const BACKEND_URL = process.env.NODE_ENV === "development" ? process.env.REACT_APP_URL : ""
 
 const Urls = ({ longUrl, shortUrl, setSnackbarOpen, setResponseData, responseData, view }) => {
     const urlCode = shortUrl.split("/").slice(-1)[0]
@@ -31,6 +31,10 @@ const Urls = ({ longUrl, shortUrl, setSnackbarOpen, setResponseData, responseDat
         })
     }
 
+    if (process.env.NODE_ENV === "development") {
+
+    }
+
     return (
         <div className="my-urls">
             <IconButton aria-label="Törlés ikon" disabled={loading} onClick={removeUrl} size="small" className="delete-icon">
@@ -50,8 +54,9 @@ const Urls = ({ longUrl, shortUrl, setSnackbarOpen, setResponseData, responseDat
                 <li>
                     <span title={longUrl} className="longurl">{longUrl}</span>
                     <span className="shorturl">
-                        <a target="_blank" rel="noreferrer" href={shortUrl}>
-                            {shortUrl}
+                        <a target="_blank" rel="noreferrer"
+                            href={process.env.NODE_ENV === "development" ? (process.env.REACT_APP_URL + "/" + shortUrl.split("/").slice(-1)[0]) : shortUrl}>
+                            {process.env.NODE_ENV === "development" ? (process.env.REACT_APP_URL + "/" + shortUrl.split("/").slice(-1)[0]) : shortUrl}
                         </a>
                         <Button onClick={() => {
                             navigator.clipboard.writeText(shortUrl)

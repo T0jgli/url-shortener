@@ -2,6 +2,7 @@ const express = require("express");
 const shortid = require("shortid");
 
 const MongoUrl = require("../db/urlModel.js");
+const logger = require("../helpers/logger.js");
 require("dotenv").config();
 
 const router = express.Router();
@@ -30,7 +31,7 @@ router.post("/", async (req, res) => {
 
         await url.save();
 
-        res.json(url);
+        res.status(201).json(url);
 
     } catch (error) {
         console.log(error)

@@ -4,6 +4,7 @@ const cors = require("cors");
 const indexRoute = require("./routes/indexRoute.js");
 const urlRoute = require("./routes/urlRoute.js");
 const dbConnect = require("./db/db.js");
+const logger = require("./helpers/logger.js")
 require("dotenv").config();
 
 dbConnect();
@@ -16,6 +17,12 @@ app.use(express.static(path.join(__dirname, "client", "build")));
 
 if (process.env.NODE_ENV) {
     app.use(cors())
+    app.use((req, res, next) => {
+        res.on("finish", () => {
+            logger("info", `METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}], STATUS - [${res.statusCode}]`)
+        })
+        next()
+    })
 }
 
 app.use("/", indexRoute);
@@ -26,5 +33,5 @@ app.get("/", (req, res) => {
 })
 
 app.listen(PORT, () => {
-    console.log(`App running on http://localhost:${PORT}`)
+    logger("build", "Started listening:", `http://localhost:${PORT}`)
 });

@@ -3,10 +3,10 @@ import axios from "axios";
 import CloseIcon from '@material-ui/icons/Close';
 import { CircularProgress, Grow } from "@material-ui/core";
 
-const BACKEND_URL = process.env.NODE_ENV === "development" ? "http://localhost:8080" : ""
+const BACKEND_URL = process.env.NODE_ENV === "development" ? process.env.REACT_APP_URL : ""
 
 function validURL (str) {
-    if (!str.includes("http")) {
+    if (!str.startsWith("http")) {
         str = "http://" + str;
     }
     try {
@@ -63,7 +63,7 @@ const SearchBox = ({ responseData, setresponseData, setSnackbarOpen }) => {
             urlToShorten: inputUrl,
             customUrl
         }).then(res => {
-            if (res.status === 200) {
+            if (res.status === 201) {
                 setInputUrl("");
                 setCustomUrl("");
                 setLoading(false);

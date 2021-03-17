@@ -5,7 +5,7 @@ import Urls from "./components/Urls";
 import GitHubIcon from '@material-ui/icons/GitHub';
 import axios from "axios";
 import { useEffect } from "react";
-const BACKEND_URL = process.env.NODE_ENV === "development" ? "http://localhost:8080" : ""
+const BACKEND_URL = process.env.NODE_ENV === "development" ? process.env.REACT_APP_URL : ""
 
 const App = () => {
   const [responseData, setresponseData] = useState(JSON.parse(localStorage.getItem("URLS")) || []);
