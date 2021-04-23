@@ -2,7 +2,6 @@ const express = require("express");
 const shortid = require("shortid");
 
 const MongoUrl = require("../db/urlModel.js");
-const logger = require("../helpers/logger.js");
 require("dotenv").config();
 
 const router = express.Router();
@@ -34,21 +33,26 @@ router.post("/", async (req, res) => {
         res.status(201).json(url);
 
     } catch (error) {
-        console.log(error)
+        logger("error", error)
         res.status(500).send("Server error")
     }
 });
 
 router.delete("/:code", async (req, res) => {
-    const url = await MongoUrl.findOne({ urlCode: req.params.code });
+    try {
+        const url = await MongoUrl.findOne({ urlCode: req.params.code });
 
-    if (!url) {
-        return res.json({ errorMessage: "Nincs ilyen URL" })
+        if (!url) {
+            return res.json({ errorMessage: "Nincs ilyen URL" })
+        }
+
+        await MongoUrl.findOneAndDelete({ urlCode: req.params.code })
+
+        return res.status(200).json({ success: true })
+    } catch (error) {
+        logger("error", error)
+        res.status(500).send("Server error")
     }
-
-    await MongoUrl.findOneAndDelete({ urlCode: req.params.code })
-
-    return res.status(200).json({ success: true })
 })
 
 router.get("/getViewers", async (req, res) => {
@@ -64,7 +68,7 @@ router.get("/getViewers", async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error)
+        logger("error", error)
         res.status(500).send("Server error")
     }
 

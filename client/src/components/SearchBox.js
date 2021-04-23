@@ -27,6 +27,13 @@ const SearchBox = ({ responseData, setresponseData, setSnackbarOpen }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        if (customUrl.includes("api"))
+            return setSnackbarOpen({
+                open: true,
+                content: "Nem megfelelő egyedi azonosító!",
+                severity: "error",
+            });
+
         if (!inputUrl)
             return setSnackbarOpen({
                 open: true,
