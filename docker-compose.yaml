@@ -1,0 +1,10 @@
+version: "3.3"
+
+services:
+  url-shortener:
+    image: url-shortener
+    container_name: url-shortener
+    restart: always
+    build: .
+    ports:
+      - 8080:8080
