@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const logger = require("../helpers/logger.js")
+const logger = require("../helpers/logger.js");
 require("dotenv").config();
 
 const CONNECTURL = process.env.MONGOURL;
@@ -9,10 +9,9 @@ const dbConnect = async () => {
         await mongoose.connect(CONNECTURL, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            useFindAndModify: false
         });
 
-        logger("build", "MongoDB connected...")
+        logger("build", "MongoDB connected...");
     } catch (error) {
         console.log(error);
         process.exit(1);
