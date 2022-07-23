@@ -1,5 +1,6 @@
 const express = require("express");
 const shortid = require("shortid");
+const logger = require("../helpers/logger.js");
 
 const MongoUrl = require("../db/urlModel.js");
 require("dotenv").config();
